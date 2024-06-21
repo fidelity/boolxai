@@ -1,4 +1,4 @@
-black==23.3.0
+black==24.3.0
 pytest==7.3.1
 nbmake==1.4.1
 coverage==7.2.7
