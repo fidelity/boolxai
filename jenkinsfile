@@ -1,0 +1,42 @@
+#!groovy
+@Library(['fcat-jenkins-shared-libraries', 'codescanning-library']) _
+pipeline {
+    agent { label 'fcat-docker-gm' }
+    stages{
+
+        stage("Setup Pipeline Env") {
+            steps {
+                script {
+                    setglobalEnvvars()
+                    // Email build result to the following CC list, semicolon separate
+                    // example: EMAIL_CC_LIST = "axxxxxx@fmr.com; axxxxxx@fmr.com "
+                    env.EMAIL_CC_LIST = "a469588@fmr.com"
+                    env.APP_ID = "AP161555"
+                    // Source Code
+                    env.GIT_HTTP_CLONE_URL = "https://github.com/Fidelity-Green/AP161555-boolxai.git"
+                    env.GIT_BUILD_BRANCH = "${GIT_BUILD_BRANCH}"
+                    env.DOCKER_V_ARGS="-v /etc/passwd:/etc/passwd -v /bld/${env.ARTIFACTORY_CREDENTIALS_ID}:/home/${env.ARTIFACTORY_CREDENTIALS_ID}"
+                    env.GIT_TAG_NAME = "${env.GLOBAL_BUILD_VERSION}.${BUILD_NUMBER}"
+                }
+            }
+        }
+
+        stage("Checkout Source Code") {
+            steps {
+                script {
+                    currentBuild.displayName = "${GLOBAL_BUILD_VERSION}" + "." + "${BUILD_NUMBER}" + "(" + "${GIT_BUILD_BRANCH}" + ")"
+                }
+                deleteDir()
+                gitHubCheckout()
+            }
+        }
+        stage("github code scanning") {
+            steps {
+                 githubCodeScan("${env.GIT_HUB_CREDENTIAL_ID}", [
+                                    languages: ['python'],
+                                        ref: "refs/heads/${env.GIT_BUILD_BRANCH}"
+                                    ])
+            }
+        }
+    }
+}

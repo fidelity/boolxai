@@ -1,0 +1,29 @@
+BoolXAI
+
+Portions copyright 2023 FMR LLC
+Portions copyright 2023 Amazon Web Services, Inc.
+
+Developed by
+[Amazon Quantum Solutions Lab](https://aws.amazon.com/quantum-solutions-lab/)
+as part of an engagement with [FMR LLC](https://www.fidelity.com/).
+
+This product relies on the following works (and the dependencies thereof), installed
+separately:
+
+| Package      | Website                       | License              |
+|--------------|-------------------------------|----------------------|
+| graphviz     | https://graphviz.org          | CPL                  |
+| ipython      | https://ipython.org/          | 3-Clause BSD License |
+| networkx     | https://networkx.org          | 3-Clause BSD License |
+| numpy        | https://numpy.org             | 3-Clause BSD License |
+| pygraphviz   | https://pygraphviz.github.io/ | 3-Clause BSD License |
+| scikit-learn | https://scikit-learn.org      | 3-Clause BSD License |
+
+The examples rely on the following works (and the dependencies thereof), installed
+separately:
+
+| Package      | Website                       | License              |
+|--------------|-------------------------------|----------------------|
+| jupyter      | https://jupyter.org/          | 3-Clause BSD License |
+| matplotlib   | https://matplotlib.org/       | PSF License          |
+| pandas       | https://pandas.pydata.org/    | 3-Clause BSD License |

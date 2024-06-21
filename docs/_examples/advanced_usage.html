@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Usage Example &mdash; BoolXAI 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Upstream Usage Example" href="upstream_usage.html" />
+    <link rel="prev" title="Basic Usage Example" href="basic_usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BoolXAI
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Usage Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html">Basic Usage Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Advanced Usage Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Input-data">Input data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Number-of-starts">Number of starts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Bagging">Bagging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Parallelization">Parallelization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Cross-validation">Cross validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Pareto-frontier">Pareto frontier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Rule-class-diagram">Rule class diagram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Changing-the-allowed-operators">Changing the allowed operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Adding-custom-operators">Adding custom operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Optimizing-part-of-a-rule">Optimizing part of a rule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="upstream_usage.html">Upstream Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">BoolXAI Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">This repo is archived</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">BoolXAI CHANGELOG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notices.html">Notices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BoolXAI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Usage Examples</a></li>
+      <li class="breadcrumb-item active">Advanced Usage Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_examples/advanced_usage.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Advanced-Usage-Example">
+<h1>Advanced Usage Example<a class="headerlink" href="#Advanced-Usage-Example" title="Link to this heading"></a></h1>
+<p>In this example we cover advanced usage of <code class="docutils literal notranslate"><span class="pre">BoolXAI.RuleClassifier</span></code>.</p>
+<section id="Input-data">
+<h2>Input data<a class="headerlink" href="#Input-data" title="Link to this heading"></a></h2>
+<p>We’ll start with the same binarized data we used in the Basic Usage Example. In order to speed up the execution, we’ll only use a subset of the data:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+
+<span class="n">set_config</span><span class="p">(</span><span class="n">transform_output</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_breast_cancer</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Use a subset of the data to speed up execution.</span>
+<span class="c1"># For higher quality results, comment these lines out.</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Binarize the data</span>
+<span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">BoolXAIKBinsDiscretizer</span>
+
+<span class="n">binarizer</span> <span class="o">=</span> <span class="n">BoolXAIKBinsDiscretizer</span><span class="p">(</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;onehot-dense&quot;</span>
+<span class="p">)</span>
+<span class="n">X_binarized</span> <span class="o">=</span> <span class="n">binarizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">X_binarized</span><span class="o">.</span><span class="n">head</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Number-of-starts">
+<h2>Number of starts<a class="headerlink" href="#Number-of-starts" title="Link to this heading"></a></h2>
+<p>Each training run consists of <code class="docutils literal notranslate"><span class="pre">num_starts</span></code> starts. The best rule and score for each start can be accessed in the <code class="docutils literal notranslate"><span class="pre">rules_</span></code> and <code class="docutils literal notranslate"><span class="pre">scores_</span></code> attributes (respectively). Next we’ll train a classifier and inspect these attributes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">BoolXAI</span>
+
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  score=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rule=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule for each start:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">score</span><span class="p">,</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">rules_</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">rule</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Best score and rule:
+  score=0.91 rule=Or(230, 50, 271, 222)
+
+Best score and rule for each start:
+  score=0.81 rule=Or(251, 120, 261, 160)
+  score=0.73 rule=AtMost1(~171, And(257, ~246), ~130)
+  score=0.74 rule=AtMost1(~50, ~30, 109)
+  score=0.86 rule=Or(20, 92, 72, 71, 231)
+  score=0.71 rule=Choose1(~225, And(9, ~37), 195)
+  score=0.78 rule=Choose1(~205, 28, 206, 256, 64)
+  score=0.76 rule=AtMost1(~261, ~202, 126)
+  score=0.71 rule=AtMost1(~101, ~270, 296)
+  score=0.74 rule=AtLeast2(220, 72, Choose1(138, ~129))
+  score=0.91 rule=Or(230, 50, 271, 222)
+</pre></div></div>
+</div>
+</section>
+<section id="Bagging">
+<h2>Bagging<a class="headerlink" href="#Bagging" title="Link to this heading"></a></h2>
+<p>Bagging or “boostrap aggregation” is commonly used to select only a partial sample of the dataset to avoid overfitting. It is often applied to single estimators that are then combined to form an ensemble estimator. In our case, our model is already highly regularized, so it’s unlikely to overfit the data (unless it’s very small/simple). For this reason, combined with the binary inputs, it’s unnecessary to feed it huge amounts of data. So, in this case we use bagging not to mitigate overfitting,
+but rather to boost performance, since evaluation of rules scales linearly with the number of samples.</p>
+<p>In the rule classifier, one can control the level of bagging using the parameter <code class="docutils literal notranslate"><span class="pre">max_samples</span></code>. It controls the maximum number of samples that will be used in each start, with a default of 2,000. For large datasets, this can make a big difference. Note that the <code class="docutils literal notranslate"><span class="pre">best_rule_</span></code> attribute is populated with the best rule as evaluated over the whole (train) dataset, not only <code class="docutils literal notranslate"><span class="pre">max_samples</span></code>.</p>
+<p>Let’s look at an example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Without bagging:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;score=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rule=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Without bagging:
+score=0.91 rule=Or(230, 50, 271, 222)
+
+CPU times: user 21.3 ms, sys: 5.04 ms, total: 26.3 ms
+Wall time: 5.84 s
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">,</span> <span class="n">max_samples</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">)</span> <span class="o">//</span> <span class="mi">5</span>
+<span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;With bagging:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;score=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rule=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+With bagging:
+score=0.76 rule=Choose1(244, 226, ~168, 217, 219)
+
+CPU times: user 61 ms, sys: 6.37 ms, total: 67.4 ms
+Wall time: 2.7 s
+</pre></div></div>
+</div>
+<p>The wall clock time was much shorter, but the result was worse. That’s expected for such a small dataset - using 20 samples for each start is not representative. However, for larger datasets we have observed that one can get a significant reduction in run time without a significant change in score.</p>
+</section>
+<section id="Parallelization">
+<h2>Parallelization<a class="headerlink" href="#Parallelization" title="Link to this heading"></a></h2>
+<p>Since the runtime for training the classifier can be significant, it’s useful to parallelize the computation. The number of parallel jobs (starts, in this case) is controlled by the argument <code class="docutils literal notranslate"><span class="pre">num_jobs</span></code>. We can probe the dependence of the runtime on <code class="docutils literal notranslate"><span class="pre">num_jobs</span></code> with a small experiment (results are dependent on the machine you are using):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span>
+    <span class="n">num_starts</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">num_iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span>
+<span class="p">)</span>
+
+<span class="n">all_num_jobs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">times</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">num_jobs</span> <span class="ow">in</span> <span class="n">all_num_jobs</span><span class="p">:</span>
+    <span class="n">rule_classifier</span><span class="o">.</span><span class="n">num_jobs</span> <span class="o">=</span> <span class="n">num_jobs</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+    <span class="n">times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elapsed_time</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_jobs</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">elapsed_time</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> sec, </span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.3</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+num_jobs=24, elapsed_time=7.77 sec, 0.834, AtLeast1(160, 21, 30, 261)
+num_jobs=12, elapsed_time=6.02 sec, 0.834, AtLeast1(160, 21, 30, 261)
+num_jobs=8, elapsed_time=4.22 sec, 0.834, AtLeast1(160, 21, 30, 261)
+num_jobs=4, elapsed_time=6.91 sec, 0.834, AtLeast1(160, 21, 30, 261)
+num_jobs=2, elapsed_time=11.32 sec, 0.834, AtLeast1(160, 21, 30, 261)
+num_jobs=1, elapsed_time=18.35 sec, 0.834, AtLeast1(160, 21, 30, 261)
+</pre></div></div>
+</div>
+<p>It is clear that we can get a large speedup by using multiple cores. Note that the rule and score are the same, as expected, since we used the same seed. We see that there is a sweet spot located at the number of cores of the machine we are using (note: using the full data is advisable to get more representative results):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">all_num_jobs</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="s2">&quot;s--b&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of jobs&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Time [sec]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/_examples_advanced_usage_13_0.png" src="../_images/_examples_advanced_usage_13_0.png" />
+</div>
+</div>
+</section>
+<section id="Cross-validation">
+<h2>Cross validation<a class="headerlink" href="#Cross-validation" title="Link to this heading"></a></h2>
+<p>Cross-validation is often used in order to quantify a model’s generalization ability, as well as for hyperparameter optimization. Below we provide an example of running cross-validation for a rule classifier. Here we switch off the internal parallelization over starts, instead parallelizing over the cross-validation splits. Note that the binarization is data-dependent, so we make sure to run it separately on each split. This is done by instantiating an <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> consisting of a
+binarizer and a rule classifier:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">StratifiedShuffleSplit</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">make_pipeline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Define the pipeline</span>
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">num_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">binarizer</span> <span class="o">=</span> <span class="n">BoolXAIKBinsDiscretizer</span><span class="p">(</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;onehot-dense&quot;</span>
+<span class="p">)</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">binarizer</span><span class="p">,</span> <span class="n">rule_classifier</span><span class="p">)</span>
+
+<span class="c1"># Run cross-validation</span>
+<span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">train_size</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+    <span class="n">pipeline</span><span class="p">,</span>
+    <span class="n">X</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">,</span>
+    <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+    <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># Parallelization here, instead of inside classifier</span>
+    <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">error_score</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Train=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">+-</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Time=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;fit_time&quot;</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">+-</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;fit_time&quot;</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">sec&quot;&quot;&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Test=</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">+-</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">])</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Train=0.92+-0.03, Time=36.68+-0.68sec
+Test=0.80+-0.08
+</pre></div></div>
+</div>
+</section>
+<section id="Pareto-frontier">
+<h2>Pareto frontier<a class="headerlink" href="#Pareto-frontier" title="Link to this heading"></a></h2>
+<p>In most cases there isn’t a clear reason to choose a specific <code class="docutils literal notranslate"><span class="pre">max_complexity</span></code> value. In general, we might expect that higher values will provide more expressivity and therefore higher metric scores, but this is not guaranteed. For these reasons, it’s often a good idea to find the best rule for multiple <code class="docutils literal notranslate"><span class="pre">max_complexity</span></code> values. Viewing the resulting curve (the Pareto frontier) in the metric-complexity 2D space is instructive. We show an example of how to do this using cross-validation.
+Warning, this cell might take a few minutes to run!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run cross-validation</span>
+<span class="n">train_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_scores</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">fit_times</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">complexities</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">max_complexity</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">]:</span>
+    <span class="c1"># Use the pipeline we instantiated earlier, adjusting max_complexity</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span><span class="n">ruleclassifier__max_complexity</span><span class="o">=</span><span class="n">max_complexity</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span>
+        <span class="n">pipeline</span><span class="p">,</span>
+        <span class="n">X</span><span class="p">,</span>
+        <span class="n">y</span><span class="p">,</span>
+        <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+        <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># Parallelization here, instead of inside classifier</span>
+        <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">error_score</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">train_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;train_score&quot;</span><span class="p">])</span>
+    <span class="n">train_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_score</span><span class="p">)</span>
+
+    <span class="n">test_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">])</span>
+    <span class="n">test_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_score</span><span class="p">)</span>
+
+    <span class="n">fit_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;fit_time&quot;</span><span class="p">])</span>
+    <span class="n">fit_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fit_time</span><span class="p">)</span>
+
+    <span class="n">pipelines</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">]</span>
+    <span class="n">mean_complexity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">pipeline</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">best_rule_</span><span class="o">.</span><span class="n">complexity</span><span class="p">()</span> <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">pipelines</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">complexities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_complexity</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">max_complexity</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">mean_complexity</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">train_score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">test_score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">fit_time</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">sec&quot;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+max_complexity=3, mean_complexity=3.0, train_score=0.78, test_score=0.71, fit_time=22.41sec
+max_complexity=6, mean_complexity=5.75, train_score=0.92, test_score=0.80, fit_time=30.02sec
+max_complexity=10, mean_complexity=8.125, train_score=0.91, test_score=0.80, fit_time=41.83sec
+max_complexity=15, mean_complexity=9.75, train_score=0.94, test_score=0.79, fit_time=60.93sec
+</pre></div></div>
+</div>
+<p>We can plot the results for easier comparison. Note that we make sure to use the mean of the complexities of the resulting rules on the x axis, and not the respective <code class="docutils literal notranslate"><span class="pre">max_complexity</span></code> (which is an upper bound on the former):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">complexities</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="s2">&quot;s-b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">complexities</span><span class="p">,</span> <span class="n">test_scores</span><span class="p">,</span> <span class="s2">&quot;o-r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Complexity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Balanced Accuracy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/_examples_advanced_usage_20_0.png" src="../_images/_examples_advanced_usage_20_0.png" />
+</div>
+</div>
+</section>
+<section id="Rule-class-diagram">
+<h2>Rule class diagram<a class="headerlink" href="#Rule-class-diagram" title="Link to this heading"></a></h2>
+<p>For the next two sections, it will be useful to refer to the rule class diagram:</p>
+<p><img alt="title" src="../_images/rule_class_diagram.png" /></p>
+<p>Note that only the leaves are concrete classes - specific operators, literals, or trivial rules. The rest of the classes are abstract classes. The <code class="docutils literal notranslate"><span class="pre">Operator</span></code> class is not actually implemented, it is only pictured for clearer presentation.</p>
+</section>
+<section id="Changing-the-allowed-operators">
+<h2>Changing the allowed operators<a class="headerlink" href="#Changing-the-allowed-operators" title="Link to this heading"></a></h2>
+<p>The rule classifier has an argument <code class="docutils literal notranslate"><span class="pre">operators</span></code> which by default includes all the operators provided in <code class="docutils literal notranslate"><span class="pre">boolxai</span></code>. But what if we want to allow only some of the operators? As an example, we might want to only include the unparameterized operators <code class="docutils literal notranslate"><span class="pre">And</span></code> and <code class="docutils literal notranslate"><span class="pre">Or</span></code>. We can do that like so:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">Operator</span>
+
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">,</span> <span class="n">operators</span><span class="o">=</span><span class="p">[</span><span class="n">Operator</span><span class="o">.</span><span class="n">And</span><span class="p">,</span> <span class="n">Operator</span><span class="o">.</span><span class="n">Or</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>We can inspect the best rule seen, as well as the best rule for each start, to make sure that they indeed include only those operators:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  score=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rule=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule for each start:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">score</span><span class="p">,</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">rules_</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">rule</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Best score and rule:
+  score=0.93 rule=Or(252, 222, 220, 201, 33)
+
+Best score and rule for each start:
+  score=0.71 rule=And(Or(~205, 42), ~109, ~267)
+  score=0.87 rule=Or(71, 170, 250, 200, 62)
+  score=0.93 rule=Or(252, 222, 220, 201, 33)
+  score=0.80 rule=Or(232, 190, 0)
+  score=0.76 rule=And(~38, Or(230, 23, 41))
+  score=0.89 rule=Or(220, 222, 272, 221)
+  score=0.80 rule=And(Or(192, 30, 272), ~9)
+  score=0.81 rule=Or(251, 130, 260, 261)
+  score=0.71 rule=Or(And(~126, 1, ~296), 270)
+  score=0.92 rule=Or(230, 150, 232, 252, 202)
+</pre></div></div>
+</div>
+</section>
+<section id="Adding-custom-operators">
+<h2>Adding custom operators<a class="headerlink" href="#Adding-custom-operators" title="Link to this heading"></a></h2>
+<p>We can even add custom operators. To do so, we follow the template of the included operators in <code class="docutils literal notranslate"><span class="pre">boolxai.rules.operators</span></code>. In particular, we must subclass <code class="docutils literal notranslate"><span class="pre">UnparametrizedOperator</span></code> or <code class="docutils literal notranslate"><span class="pre">ParametrizedOperator</span></code>, and implement the <code class="docutils literal notranslate"><span class="pre">_evaluate()</span></code> method. Let’s add the <code class="docutils literal notranslate"><span class="pre">AllEqual()</span></code> operator, which returns <code class="docutils literal notranslate"><span class="pre">True</span></code> only if all included literals are true:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">Literal</span>
+<span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">UnparametrizedOperator</span>
+
+
+<span class="k">class</span> <span class="nc">AllEqual</span><span class="p">(</span><span class="n">UnparametrizedOperator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True if all subrules are equal.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="n">sum_subrules</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">subrule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="k">for</span> <span class="n">subrule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subrules</span><span class="p">]),</span>
+            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">sum_subrules</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sum_subrules</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subrules</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s try our new operator to see if it works as expected:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">rule</span> <span class="o">=</span> <span class="n">AllEqual</span><span class="p">([</span><span class="n">Literal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">negated</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">Literal</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">Literal</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">rule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([False, False,  True, False,  True])
+</pre></div></div>
+</div>
+<p>Indeed, the result we were expecting! Now we can include this operator class in the training of the rule classifier:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">,</span> <span class="n">operators</span><span class="o">=</span><span class="p">[</span><span class="n">Operator</span><span class="o">.</span><span class="n">And</span><span class="p">,</span> <span class="n">AllEqual</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Once again, we can inspect the rules:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  score=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rule=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule for each start:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">score</span><span class="p">,</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">rules_</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">rule</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Best score and rule:
+  score=0.85 rule=AllEqual(And(~230, ~21), 232)
+
+Best score and rule for each start:
+  score=0.82 rule=AllEqual(~28, ~205, ~265, ~249, ~206)
+  score=0.74 rule=AllEqual(72, ~70)
+  score=0.76 rule=AllEqual(~261, 260)
+  score=0.85 rule=AllEqual(And(~230, ~21), 232)
+  score=0.81 rule=AllEqual(~239, ~225, ~178, ~88, ~7)
+  score=0.78 rule=AllEqual(~62, AllEqual(270, ~61))
+  score=0.81 rule=AllEqual(And(~230, ~262, ~263), 212)
+  score=0.83 rule=AllEqual(109, 66, 235, 78, 219)
+  score=0.80 rule=AllEqual(~274, ~179, ~299, ~138, ~207)
+  score=0.76 rule=AllEqual(AllEqual(79, ~136), 76, 108)
+</pre></div></div>
+</div>
+<p>We see that the only operators appearing in these rules are <code class="docutils literal notranslate"><span class="pre">And</span></code> and our new operator <code class="docutils literal notranslate"><span class="pre">AllEqual</span></code>, as expected. In this example we added an unparameterized operator. Adding parameterized operators follows the same pattern, provided that the operators have one integer parameter <span class="math notranslate nohighlight">\(k\)</span> for which <span class="math notranslate nohighlight">\(1 \leq k \leq \tilde{m}\)</span> where <span class="math notranslate nohighlight">\(\tilde{m}\)</span> is the number of subrules of the operator. The value of <span class="math notranslate nohighlight">\(k\)</span> is set on the fly by the rule classifier so that it is always in that range.</p>
+</section>
+<section id="Optimizing-part-of-a-rule">
+<h2>Optimizing part of a rule<a class="headerlink" href="#Optimizing-part-of-a-rule" title="Link to this heading"></a></h2>
+<p>We can also find the best subrule, given a pre-determined base rule. For example, we might already know that two features <code class="docutils literal notranslate"><span class="pre">f1</span></code> and <code class="docutils literal notranslate"><span class="pre">f2</span></code> are well correlated with the target (labels), and we’d like them to definitely be included. Then, we can formulate the problem as optimizing over <code class="docutils literal notranslate"><span class="pre">Or(f1,</span> <span class="pre">f2,</span> <span class="pre">*)</span></code>, where <code class="docutils literal notranslate"><span class="pre">*</span></code> is the part to be optimized over, which we refer to as the “wildcard node”. We’ll show how to do this step by step below.</p>
+<p>First, let us construct a rule containing two chosen features. We use two literals that appear in the best solution found at the top of this notebook:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">balanced_accuracy_score</span>
+
+<span class="n">rule</span> <span class="o">=</span> <span class="n">Operator</span><span class="o">.</span><span class="n">Or</span><span class="p">([</span><span class="n">Literal</span><span class="p">(</span><span class="mi">230</span><span class="p">),</span> <span class="n">Literal</span><span class="p">(</span><span class="mi">50</span><span class="p">)])</span>
+<span class="n">rule</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Or(230, 50)
+</pre></div></div>
+</div>
+<p>We can check the score that this rule obtains on the dataset directly by using the rule’s <code class="docutils literal notranslate"><span class="pre">evaluate()</span></code> method, followed by an application of the metric (in this case balanced accuracy):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_predict</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+score=0.74
+</pre></div></div>
+</div>
+<p>Now we’d like to add the additional wildcard node to this rule and optimize over that part of the rule. This node will be replaced by the result of the optimization we will run:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">Wildcard</span>
+
+<span class="n">base_rule</span> <span class="o">=</span> <span class="n">Operator</span><span class="o">.</span><span class="n">Or</span><span class="p">([</span><span class="n">Literal</span><span class="p">(</span><span class="mi">230</span><span class="p">),</span> <span class="n">Literal</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">Wildcard</span><span class="p">()])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rule before&quot;</span><span class="p">,</span> <span class="n">base_rule</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Rule before Or(230, 50, *)
+</pre></div></div>
+</div>
+<p>We instantiate a new <code class="docutils literal notranslate"><span class="pre">RuleClassifier</span></code> as done previously, but this time we pass in the <code class="docutils literal notranslate"><span class="pre">base_rule</span></code> containing the wildcard node:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">,</span> <span class="n">base_rule</span><span class="o">=</span><span class="n">base_rule</span><span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rule after&quot;</span><span class="p">,</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Rule after Or(230, 50, 222, 291)
+</pre></div></div>
+</div>
+<p>Now we can evaluate the new rule, with the optimized subtree:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_predict</span> <span class="o">=</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+score=0.90
+</pre></div></div>
+</div>
+<p>Or we can just obtain the score from the classifier, and of course they match:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  score=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> rule=</span><span class="si">{</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Best score and rule:
+  score=0.90 rule=Or(230, 50, 222, 291)
+</pre></div></div>
+</div>
+<p>As before, we can also print the rule and score found in each start. In this case, we can verify that all the rules contain our base rule:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best score and rule for each start:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">score</span><span class="p">,</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rule_classifier</span><span class="o">.</span><span class="n">scores_</span><span class="p">,</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">rules_</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">rule</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Best score and rule for each start:
+  score=0.87 rule=Or(230, 50, 1, 232)
+  score=0.83 rule=Or(230, 50, Choose1(197, 272))
+  score=0.85 rule=Or(230, 50, 222)
+  score=0.85 rule=Or(230, 50, 222)
+  score=0.85 rule=Or(230, 50, 222)
+  score=0.85 rule=Or(230, 50, 222)
+  score=0.86 rule=Or(230, 50, AtMost1(~142, ~272))
+  score=0.88 rule=Or(230, 50, 171, 62)
+  score=0.85 rule=Or(230, 50, 222)
+  score=0.90 rule=Or(230, 50, 222, 291)
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basic_usage.html" class="btn btn-neutral float-left" title="Basic Usage Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upstream_usage.html" class="btn btn-neutral float-right" title="Upstream Usage Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Portions copyright 2023 FMR LLC, portions copyright 2023 Amazon Web Services, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

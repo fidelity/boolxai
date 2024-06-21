@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upstream Usage Example &mdash; BoolXAI 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BoolXAI Public API" href="../api.html" />
+    <link rel="prev" title="Advanced Usage Example" href="advanced_usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            BoolXAI
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Home</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Usage Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html">Basic Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_usage.html">Advanced Usage Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Upstream Usage Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Input-data">Input data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Boosting">Boosting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Multiclass-classification">Multiclass classification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Multilabel-classification">Multilabel classification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">BoolXAI Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">This repo is archived</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">BoolXAI CHANGELOG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notices.html">Notices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BoolXAI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Usage Examples</a></li>
+      <li class="breadcrumb-item active">Upstream Usage Example</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_examples/upstream_usage.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Upstream-Usage-Example">
+<h1>Upstream Usage Example<a class="headerlink" href="#Upstream-Usage-Example" title="Link to this heading"></a></h1>
+<p>In this example we cover advanced usage of <code class="docutils literal notranslate"><span class="pre">BoolXAI.RuleClassifier</span></code> via upstream classification - i.e., using an ensemble of rule classifiers.</p>
+<section id="Input-data">
+<h2>Input data<a class="headerlink" href="#Input-data" title="Link to this heading"></a></h2>
+<p>We’ll start with the same binarized data we used in the Basic Usage Example. In order to speed up the execution, we’ll only use a subset of the data:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">set_config</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">balanced_accuracy_score</span>
+
+<span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">BoolXAI</span>
+<span class="kn">from</span> <span class="nn">util</span> <span class="kn">import</span> <span class="n">BoolXAIKBinsDiscretizer</span>
+
+<span class="n">set_config</span><span class="p">(</span><span class="n">transform_output</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">)</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_breast_cancer</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Use a subset of the data to speed up execution.</span>
+<span class="c1"># For higher quality results, comment these lines out.</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+
+<span class="c1"># Binarize the data</span>
+<span class="n">binarizer</span> <span class="o">=</span> <span class="n">BoolXAIKBinsDiscretizer</span><span class="p">(</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;onehot-dense&quot;</span>
+<span class="p">)</span>
+<span class="n">X_binarized</span> <span class="o">=</span> <span class="n">binarizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_binarized</span><span class="o">.</span><span class="n">head</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Boosting">
+<h2>Boosting<a class="headerlink" href="#Boosting" title="Link to this heading"></a></h2>
+<p>Boosting defines a meta-classifier in which copies of a classifier are trained iteratively such that they focus on the most difficult samples to predict, given the previously trained classifiers. The final result is obtained by combining the weighted predictions from these sub-classifiers. Boosting can be used to greatly improve the results provided by a weak learner, such as our highly regularized rule classifiers.</p>
+<p>As a baseline result, we’ll train and evaluate a rule classifier without boosting:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed</span> <span class="o">=</span> <span class="mi">43</span>
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_predict</span> <span class="o">=</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Without boosting: </span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Without boosting: score=0.91
+</pre></div></div>
+</div>
+<p>Now we’ll use <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>’s <code class="docutils literal notranslate"><span class="pre">AdaBoostClassifier</span></code> to create a boosted classifier with 5 underlying sub-classifiers:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">AdaBoostClassifier</span>
+
+<span class="n">boosted_rule_classifier</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span>
+    <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">),</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;SAMME&quot;</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">boosted_rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y_predict</span> <span class="o">=</span> <span class="n">boosted_rule_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;With boosting: </span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+With boosting: score=1.00
+</pre></div></div>
+</div>
+<p>This score is clearly much higher than the one obtained without boosting. Note that this comes at the price of additional training (and inference) time, but also a higher complexity (lower interpretability). Also, boosted classifiers are more likely to overfit the data. This could be evaluated by comparing the performance on out of sample data (e.g., via cross-validation).</p>
+<p>We can print the best rule for each of the sub-classifiers:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the best rule for each of the sub-classifiers inside boosted_rule_classifier</span>
+<span class="k">for</span> <span class="n">subclassifier</span> <span class="ow">in</span> <span class="n">boosted_rule_classifier</span><span class="o">.</span><span class="n">estimators_</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">subclassifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+AtLeast1([worst perimeter&lt;77.186], [compactness error&lt;0.0105], [0.0546&lt;=mean compactness&lt;0.0719], [0.0074&lt;=concave points error&lt;0.0087], [area error&lt;16.119])
+Or([0.0049&lt;=smoothness error&lt;0.0055], [565.14&lt;=worst area&lt;648.84], [365.18&lt;=mean area&lt;448.1], [0.0719&lt;=mean compactness&lt;0.0871], [worst radius&lt;12.199])
+AtLeast1([87.668&lt;=worst perimeter&lt;96.489], Choose1([perimeter error&lt;1.5335], [15.614&lt;=worst radius&lt;16.5]), [0.2212&lt;=worst concavity&lt;0.2656])
+And(~[0.1908&lt;=worst compactness&lt;0.2131], ~[0.0189&lt;=compactness error&lt;0.0245], ~[0.156&lt;=worst concave points&lt;0.1726], ~[worst area&gt;=1713.1], ~[0.034&lt;=concavity error&lt;0.0388])
+Or([mean area&lt;365.18], [21.328&lt;=worst texture&lt;23.204], [worst texture&lt;19.063], [0.0899&lt;=worst concavity&lt;0.1394])
+</pre></div></div>
+</div>
+<p>They are clearly very different from one another. We can also score each of the sub-classifiers separately:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">subclassifier</span> <span class="ow">in</span> <span class="n">boosted_rule_classifier</span><span class="o">.</span><span class="n">estimators_</span><span class="p">:</span>
+    <span class="n">y_predict</span> <span class="o">=</span> <span class="n">subclassifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+score=0.88
+score=0.87
+score=0.69
+score=0.74
+score=0.80
+</pre></div></div>
+</div>
+<p>and inspect the weight given to each of the sub-classifiers:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boosted_rule_classifier</span><span class="o">.</span><span class="n">estimator_weights_</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([2.19722458, 2.47293046, 1.64179982, 1.61359288, 2.40632095])
+</pre></div></div>
+</div>
+</section>
+<section id="Multiclass-classification">
+<h2>Multiclass classification<a class="headerlink" href="#Multiclass-classification" title="Link to this heading"></a></h2>
+<p>In this case instead of having two classes (say 0 and 1), we have more than two classes. <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> provides several ways of converting a binary classifier to a multiclass classifier. We choose to use <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> rather than <code class="docutils literal notranslate"><span class="pre">OneVsOneClassifier</span></code> or <code class="docutils literal notranslate"><span class="pre">OutputCodeClassifier</span></code> since it is far more interpretable. <code class="docutils literal notranslate"><span class="pre">OneVsOneClassifier</span></code> trains a subclassifier for each class on a binary classification task defined by labels consisting of the chosen class, and a label including all other
+classes.</p>
+<p>First, we load a multiclass classification dataset:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unique labels:&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Unique labels:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([0, 1, 2])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inspect the data</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(150, 4)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal length (cm)</th>
+      <th>sepal width (cm)</th>
+      <th>petal length (cm)</th>
+      <th>petal width (cm)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>We binarize the data as in the Basic Usage Example, but this time we use a smaller number of bins:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binarize the data</span>
+<span class="n">binarizer</span> <span class="o">=</span> <span class="n">BoolXAIKBinsDiscretizer</span><span class="p">(</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;onehot-dense&quot;</span>
+<span class="p">)</span>
+<span class="n">X_binarized</span> <span class="o">=</span> <span class="n">binarizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_binarized</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">X_binarized</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(150, 16)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>[sepal length (cm)&lt;5.1]</th>
+      <th>[5.1&lt;=sepal length (cm)&lt;5.8]</th>
+      <th>[5.8&lt;=sepal length (cm)&lt;6.4]</th>
+      <th>[sepal length (cm)&gt;=6.4]</th>
+      <th>[sepal width (cm)&lt;2.8]</th>
+      <th>[2.8&lt;=sepal width (cm)&lt;3.0]</th>
+      <th>[3.0&lt;=sepal width (cm)&lt;3.3]</th>
+      <th>[sepal width (cm)&gt;=3.3]</th>
+      <th>[petal length (cm)&lt;1.6]</th>
+      <th>[1.6&lt;=petal length (cm)&lt;4.35]</th>
+      <th>[4.35&lt;=petal length (cm)&lt;5.1]</th>
+      <th>[petal length (cm)&gt;=5.1]</th>
+      <th>[petal width (cm)&lt;0.3]</th>
+      <th>[0.3&lt;=petal width (cm)&lt;1.3]</th>
+      <th>[1.3&lt;=petal width (cm)&lt;1.8]</th>
+      <th>[petal width (cm)&gt;=1.8]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>With the data in hand, we can now use <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> to implicitly train multiple rule classifiers, one for each class, combined into a single classifier:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.multiclass</span> <span class="kn">import</span> <span class="n">OneVsRestClassifier</span>
+
+<span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">BoolXAI</span>
+
+<span class="c1"># Instantiate a multiclass rule classifier and fit it</span>
+<span class="n">multiclass_rule_classifier</span> <span class="o">=</span> <span class="n">OneVsRestClassifier</span><span class="p">(</span>
+    <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">multiclass_rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>We can make predictions and calculate scores as usual with the combined classifier:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Apply Rules</span>
+<span class="n">y_predict</span> <span class="o">=</span> <span class="n">multiclass_rule_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+score=0.96
+</pre></div></div>
+</div>
+<p>We can also print out the best rule for used internally by <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> for each of the classes:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the best rule for each of the sub-classifiers inside multiclass_rule_classifier</span>
+<span class="k">for</span> <span class="n">subclassifier</span> <span class="ow">in</span> <span class="n">multiclass_rule_classifier</span><span class="o">.</span><span class="n">estimators_</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">subclassifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Or(And(~[petal width (cm)&gt;=1.8], [sepal width (cm)&gt;=3.3]), [petal length (cm)&lt;1.6], [petal width (cm)&lt;0.3])
+And(~[petal width (cm)&gt;=1.8], ~[petal length (cm)&lt;1.6], ~[petal width (cm)&lt;0.3], ~[sepal width (cm)&gt;=3.3], ~[petal length (cm)&gt;=5.1])
+Or([petal width (cm)&gt;=1.8], [petal length (cm)&gt;=5.1])
+</pre></div></div>
+</div>
+</section>
+<section id="Multilabel-classification">
+<h2>Multilabel classification<a class="headerlink" href="#Multilabel-classification" title="Link to this heading"></a></h2>
+<p>In the multilabel (multioutput) case, we have labels that consist of multiple binary numbers. We can fit a classifier to each output using <code class="docutils literal notranslate"><span class="pre">MultiOutputClassifier</span></code>. To try this out, we first need some data. We can generate a small synthetic dataset with <code class="docutils literal notranslate"><span class="pre">make_multilabel_classification()</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_multilabel_classification</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_multilabel_classification</span><span class="p">(</span>
+    <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unique labels:&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Unique labels:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0, 0, 0],
+       [0, 0, 1],
+       [0, 1, 0],
+       [0, 1, 1],
+       [1, 0, 0],
+       [1, 1, 0],
+       [1, 1, 1]])
+</pre></div></div>
+</div>
+<p>Let’s inspect the data:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(200, 4)
+[[10. 23. 13.  2.]
+ [13. 10. 16. 11.]
+ [12. 16. 13.  9.]
+ [16. 18. 20.  7.]
+ [11. 12. 12.  5.]
+ [16. 22. 15.  7.]
+ [10. 14. 24. 17.]
+ [ 8.  7. 16.  9.]
+ [21. 13. 15. 10.]
+ [20. 19. 15.  9.]
+ [ 6. 11. 14. 15.]
+ [11. 12. 16.  8.]
+ [ 7. 10. 13.  6.]
+ [11.  9. 11. 11.]
+ [18.  1. 11. 16.]
+ [15. 14. 17. 15.]
+ [ 6. 19. 13.  3.]
+ [13. 11. 12. 15.]
+ [10. 10. 10. 11.]
+ [12. 16. 16.  2.]
+ [ 9. 16. 21.  3.]
+ [14. 10. 13. 11.]
+ [13. 16. 14.  4.]
+ [ 5. 15. 11. 21.]
+ [ 8. 13. 10. 14.]
+ [11. 12.  9. 12.]
+ [14. 28. 18.  2.]
+ [12. 19. 17.  4.]
+ [10. 23. 19.  6.]
+ [18. 10. 16. 10.]
+ [11. 19. 26.  1.]
+ [22. 14.  7. 17.]
+ [10. 26. 22.  5.]
+ [ 1. 22. 21.  9.]
+ [ 8. 12. 16.  4.]
+ [13. 11. 15. 10.]
+ [ 4.  9. 23.  3.]
+ [11. 16. 19. 15.]
+ [16. 12. 18. 12.]
+ [ 8. 13. 10. 16.]
+ [11. 24. 18.  2.]
+ [16. 15. 17.  8.]
+ [ 7.  9. 16. 13.]
+ [13. 14. 12. 11.]
+ [ 8. 19. 12.  1.]
+ [14. 20. 10.  1.]
+ [11. 18. 20.  4.]
+ [ 5. 15. 16. 10.]
+ [18. 20. 17.  0.]
+ [12. 14. 11. 13.]
+ [10. 12. 18.  8.]
+ [ 9. 20. 21.  4.]
+ [11.  8. 15.  7.]
+ [22.  7. 18. 11.]
+ [14. 23. 12.  1.]
+ [13. 26. 17.  3.]
+ [14. 20. 12. 10.]
+ [13. 13. 18. 11.]
+ [20.  3. 11. 14.]
+ [ 9. 15. 13.  2.]
+ [ 7. 16. 20.  4.]
+ [16. 20. 24.  2.]
+ [ 6. 23. 15.  4.]
+ [ 8. 24. 18.  3.]
+ [15. 10. 18. 14.]
+ [16. 16. 11.  2.]
+ [18.  8. 19. 12.]
+ [ 8. 10.  8.  7.]
+ [19.  8. 20. 11.]
+ [ 7. 15.  8.  5.]
+ [12.  8. 17. 14.]
+ [11. 15. 17.  2.]
+ [18. 18. 17.  0.]
+ [18. 14. 10.  7.]
+ [16.  7. 14.  7.]
+ [15. 18.  8.  2.]
+ [ 8. 17. 23.  3.]
+ [12. 12. 13.  6.]
+ [18.  0. 15. 16.]
+ [10. 12. 26. 11.]
+ [11. 15. 13.  3.]
+ [11. 21.  9.  1.]
+ [10. 18. 14.  6.]
+ [15.  9. 11. 14.]
+ [ 2. 10. 21.  1.]
+ [17. 13. 12.  7.]
+ [14.  7. 14. 14.]
+ [17. 13. 10.  5.]
+ [13. 20.  9.  4.]
+ [10. 25. 19.  1.]
+ [10. 10.  9.  9.]
+ [12. 19. 20.  3.]
+ [ 3. 22. 19.  6.]
+ [17.  8. 14. 15.]
+ [ 5.  7. 17. 11.]
+ [10. 15. 18.  6.]
+ [11.  7. 18.  9.]
+ [14. 15. 10. 11.]
+ [17. 20. 10. 21.]
+ [11. 14. 19. 14.]
+ [14. 15. 18.  9.]
+ [ 9. 23. 20.  8.]
+ [ 9. 14. 20.  2.]
+ [16. 12. 14.  7.]
+ [13. 18. 12. 16.]
+ [16. 16. 16.  1.]
+ [ 9. 17. 16.  2.]
+ [15. 10. 21. 10.]
+ [13. 11. 18. 15.]
+ [ 4. 18. 24.  5.]
+ [15. 20. 11.  2.]
+ [ 9. 17. 21.  7.]
+ [12. 23. 11.  5.]
+ [11. 17. 15.  3.]
+ [21.  1.  8. 16.]
+ [16.  0. 14. 16.]
+ [12.  9. 17. 15.]
+ [ 7. 23. 20.  4.]
+ [19.  9. 20. 10.]
+ [ 7. 13. 11.  6.]
+ [ 9. 21. 10.  1.]
+ [ 8. 10. 23.  4.]
+ [ 9. 21. 14.  2.]
+ [11. 10. 31.  6.]
+ [ 3. 19. 25.  2.]
+ [11. 11. 16.  9.]
+ [ 8. 22. 13.  5.]
+ [12. 18. 14. 11.]
+ [14. 21. 20.  5.]
+ [17. 12. 23. 10.]
+ [13. 14. 15. 12.]
+ [10. 20. 16.  6.]
+ [11. 16. 17.  6.]
+ [13.  9. 17.  6.]
+ [10. 23. 19.  7.]
+ [14. 11. 14. 13.]
+ [ 6. 20. 17.  5.]
+ [12. 20. 20.  2.]
+ [12. 25. 18. 14.]
+ [13. 15. 13.  9.]
+ [12. 21. 12.  2.]
+ [13.  8. 14. 19.]
+ [ 7.  9. 18. 10.]
+ [14.  0. 17. 19.]
+ [14.  0. 19. 14.]
+ [ 4. 10. 15.  9.]
+ [16. 25. 11.  2.]
+ [ 9. 15. 19.  0.]
+ [12.  9. 15.  3.]
+ [ 9. 14. 13.  6.]
+ [10. 14. 15.  6.]
+ [15. 15. 11.  1.]
+ [15. 21. 20.  3.]
+ [12. 12. 16. 10.]
+ [11. 13. 16.  8.]
+ [18. 11. 15.  6.]
+ [ 9. 22. 13.  5.]
+ [ 9. 12. 10. 18.]
+ [14. 12. 17. 12.]
+ [13.  9.  8. 14.]
+ [12. 10.  9. 15.]
+ [19. 20. 15. 13.]
+ [11. 26. 17.  1.]
+ [ 9. 17.  5.  2.]
+ [ 9.  8. 19. 12.]
+ [10. 25. 11.  0.]
+ [17.  7. 17.  6.]
+ [ 9. 22. 19.  0.]
+ [13. 12. 19.  9.]
+ [15. 10. 11. 14.]
+ [10. 13.  8.  7.]
+ [ 5. 23. 16.  1.]
+ [19. 18. 22. 10.]
+ [ 5. 11. 16. 12.]
+ [12. 13. 14.  7.]
+ [11. 15. 19. 13.]
+ [11. 12. 16. 12.]
+ [14. 10. 16.  8.]
+ [14. 10. 24. 11.]
+ [ 5. 10. 14. 12.]
+ [ 9.  4. 12. 13.]
+ [19.  0. 17. 14.]
+ [19. 17. 10.  7.]
+ [11. 11. 21.  7.]
+ [12.  9. 18.  8.]
+ [ 8. 14. 15.  9.]
+ [17.  2. 14. 21.]
+ [16. 13. 19. 11.]
+ [11.  9. 18.  7.]
+ [12. 18. 13.  1.]
+ [ 1. 11. 22.  5.]
+ [11. 20. 18.  3.]
+ [12. 20. 25.  4.]
+ [ 8. 23. 14.  4.]
+ [ 6.  9. 10.  5.]
+ [12. 27. 13.  3.]
+ [14. 14. 13.  6.]
+ [20.  9. 16.  8.]
+ [10. 19. 14.  3.]
+ [16. 20. 18.  4.]]
+</pre></div></div>
+</div>
+<p>As before, we binarize the data. We’ll also give the features names, so that we get more intuitive binarized feature names below:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">]</span>
+
+<span class="c1"># Binarize the data</span>
+<span class="n">binarizer</span> <span class="o">=</span> <span class="n">BoolXAIKBinsDiscretizer</span><span class="p">(</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">strategy</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">,</span> <span class="n">encode</span><span class="o">=</span><span class="s2">&quot;onehot-dense&quot;</span>
+<span class="p">)</span>
+<span class="n">X_binarized</span> <span class="o">=</span> <span class="n">binarizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">X_binarized</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">X_binarized</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(200, 8)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>[a&lt;12.0]</th>
+      <th>[a&gt;=12.0]</th>
+      <th>[b&lt;14.0]</th>
+      <th>[b&gt;=14.0]</th>
+      <th>[c&lt;16.0]</th>
+      <th>[c&gt;=16.0]</th>
+      <th>[d&lt;7.0]</th>
+      <th>[d&gt;=7.0]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>With the data in hand, we can now use <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> to implicitly train multiple rule classifiers, one for each label, combined into a single classifier:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.multioutput</span> <span class="kn">import</span> <span class="n">MultiOutputClassifier</span>
+
+<span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">BoolXAI</span>
+
+<span class="c1"># Instantiate a multilabel rule classifier and fit it</span>
+<span class="n">multilabel_rule_classifier</span> <span class="o">=</span> <span class="n">MultiOutputClassifier</span><span class="p">(</span>
+    <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">43</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">multilabel_rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>We can make predictions and calculate scores as usual with the combined classifier. Note, however, that <code class="docutils literal notranslate"><span class="pre">balanced_accuracy_score</span></code> does not support multilabel classification, so we switch to <code class="docutils literal notranslate"><span class="pre">accuracy_score</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Apply Rules</span>
+<span class="n">y_predict</span> <span class="o">=</span> <span class="n">multilabel_rule_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_binarized</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+score=0.38
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print the best rule for each of the sub-classifiers inside multilabel_rule_classifier</span>
+<span class="k">for</span> <span class="n">subclassifier</span> <span class="ow">in</span> <span class="n">multilabel_rule_classifier</span><span class="o">.</span><span class="n">estimators_</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">subclassifier</span><span class="o">.</span><span class="n">best_rule_</span><span class="o">.</span><span class="n">to_str</span><span class="p">(</span><span class="n">X_binarized</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+AtMost1(~[a&lt;12.0], [c&lt;16.0], [a&gt;=12.0], ~[d&lt;7.0])
+AtLeast1(Choose1(~[d&lt;7.0], [c&lt;16.0], ~[a&lt;12.0]), ~[d&gt;=7.0])
+AtMost1(AtMost1(~[b&gt;=14.0], ~[a&lt;12.0]), [d&lt;7.0])
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="advanced_usage.html" class="btn btn-neutral float-left" title="Advanced Usage Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-right" title="BoolXAI Public API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Portions copyright 2023 FMR LLC, portions copyright 2023 Amazon Web Services, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

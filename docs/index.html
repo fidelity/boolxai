@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BoolXAI: Explainable AI using expressive Boolean formulas &mdash; BoolXAI 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="_static/copybutton.js?v=f281be69"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="BoolXAI: Explainable AI using expressive Boolean formulas" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            BoolXAI
+          </a>
+              <div class="version">
+                1.0.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Usage Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">BoolXAI Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">This repo is archived</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">BoolXAI CHANGELOG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notices.html">Notices</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">BoolXAI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">BoolXAI: Explainable AI using expressive Boolean formulas</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="boolxai-explainable-ai-using-expressive-boolean-formulas">
+<h1>BoolXAI: Explainable AI using expressive Boolean formulas<a class="headerlink" href="#boolxai-explainable-ai-using-expressive-boolean-formulas" title="Link to this heading"></a></h1>
+<p><em>This repo is being made available as a static archive. It has been released by Fidelity Investments under the Apache 2.0 license, and will not receive updates.</em>
+<em>If you have questions, please contact <a class="reference external" href="mailto:opensource&#37;&#52;&#48;fidelity&#46;com">opensource<span>&#64;</span>fidelity<span>&#46;</span>com</a></em>.</p>
+<p><a class="reference external" href="https://github.com/fidelity/boolxai/actions/workflows/ci.yml"><img alt="ci" src="https://github.com/fidelity/boolxai/actions/workflows/ci.yml/badge.svg?branch=master" /></a>
+<a class="reference external" href="https://pypi.python.org/pypi/boolxai/"><img alt="PyPI version fury.io" src="https://badge.fury.io/py/boolxai.svg" /></a>
+<a class="reference external" href="https://www.python.org/downloads/release/python-3100/"><img alt="Python 3.8+" src="https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue" /></a>
+<a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" /></a>
+<a class="reference external" href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
+<a class="reference external" href="http://makeapullrequest.com"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" /></a>
+<a class="reference external" href="https://pepy.tech/project/boolxai"><img alt="Downloads" src="https://static.pepy.tech/personalized-badge/boolxai?period=total&amp;units=international_system&amp;left_color=grey&amp;right_color=orange&amp;left_text=Downloads" /></a></p>
+<p>BoolXAI (<a class="reference external" href="https://www.mdpi.com/2504-4990/5/4/86">MAKE’23</a>, <a class="reference external" href="https://arxiv.org/pdf/2306.03976">ArXiv’23</a>) is a research library for Explainable AI (XAI) based
+on expressive Boolean formulas that allow And, Or, Choose(k), AtMost(k), and AtLeast(k) operators.</p>
+<p>The Boolean formula defines a rule with tunable
+complexity (or interpretability), according to which input data are classified. Such a
+formula can include any operator that can be applied to one or more Boolean variables,
+thus providing higher expressiveness compared to more rigid rule-based and tree-based
+approaches. The classifier is trained using native local optimization techniques,
+efficiently searching the space of feasible formulas. Read more on this <a class="reference external" href="https://fcatalyst.com/blog/june2023/explainable-ai-using-expressive-boolean-formulas">Fidelity blogpost</a>.</p>
+<p>BoolXAI is developed by Amazon Quantum Solutions Lab, the FCAT Quantum and Future Computing Incubator, and the AI Center of Excellence at Fidelity Investments. Documentation is available at <a class="reference external" href="https://fidelity.github.io/boolxai">fidelity.github.io/boolxai</a>.</p>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<p>The heart of BoolXAI is the rule classifier (<code class="docutils literal notranslate"><span class="pre">BoolXAI.RuleClassifier</span></code>), which can be
+used as an interpretable ML model for binary classification. Note that the input data
+must be binarized. Here’s a simple example showing the basic usage. For additional
+examples, including advanced usage, see the Usage Examples.</p>
+<!--- When updating the below, please update tests/test_quick_start.py as well --->
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">balanced_accuracy_score</span>
+
+<span class="kn">from</span> <span class="nn">boolxai</span> <span class="kn">import</span> <span class="n">BoolXAI</span><span class="p">,</span> <span class="n">Operator</span>
+
+<span class="c1"># Create random toy data for binary classification. X and y must be binary!</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Rule classifier with maximum depth, complexity, possible operators</span>
+<span class="n">rule_classifier</span> <span class="o">=</span> <span class="n">BoolXAI</span><span class="o">.</span><span class="n">RuleClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                         <span class="n">max_complexity</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+                                         <span class="n">operators</span><span class="o">=</span><span class="p">[</span><span class="n">Operator</span><span class="o">.</span><span class="n">And</span><span class="p">,</span> <span class="n">Operator</span><span class="o">.</span><span class="n">Or</span><span class="p">,</span> <span class="n">Operator</span><span class="o">.</span><span class="n">Choose</span><span class="p">,</span> <span class="n">Operator</span><span class="o">.</span><span class="n">AtMost</span><span class="p">,</span> <span class="n">Operator</span><span class="o">.</span><span class="n">AtLeast</span><span class="p">],</span>
+                                         <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Learn the best rule</span>
+<span class="n">rule_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Best rule and best score</span>
+<span class="n">best_rule</span> <span class="o">=</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_rule_</span>
+<span class="n">best_score</span> <span class="o">=</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">best_score_</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">best_rule</span><span class="si">=}</span><span class="s2"> </span><span class="si">{</span><span class="n">best_score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># The depth of a rule is the number of edges in the longest path from the root to any leaf/literal.</span>
+<span class="c1"># The complexity of a rule is the total number of operators and literals.</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;depth=</span><span class="si">{</span><span class="n">best_rule</span><span class="o">.</span><span class="n">depth</span><span class="p">()</span><span class="si">}</span><span class="s2"> complexity=</span><span class="si">{</span><span class="n">best_rule</span><span class="o">.</span><span class="n">complexity</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Predict and score</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">rule_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">balanced_accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">score</span><span class="si">=:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># It is also possible to plot the best rule --requires installing plot dependencies</span>
+<span class="n">best_rule</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="c1"># or get a networkx.DiGraph representation of the rule --requires installing plot dependencies</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">best_rule</span><span class="o">.</span><span class="n">to_graph</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/basic_usage.html#Training-a-rule-classifier">Training a rule classifier</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/basic_usage.html#Making-sense-of-the-rules">Interpreting and visualizing the rules</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Number-of-starts">Number of starts (num_starts)</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Bagging">Bagging (max_samples)</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Parallelization">Parallelization (num_jobs)</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Cross-validation">Cross-Validation</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Pareto-frontier">Pareto frontier (max_complexity)</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Changing-the-allowed-operators">Boolean operators</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Adding-custom-operators">Custom operators</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/advanced_usage.html#Optimizing-part-of-a-rule">Partial optimization (base_rule)</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/upstream_usage.html#Boosting">Boosting</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/upstream_usage.html#Multilabel-classification">Multi-label classification</a></p></li>
+<li><p><a class="reference external" href="http://fidelity.github.io/boolxai/docs/_examples/upstream_usage.html#Multiclass-classification">Multi-class classification</a></p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>We recommend installing BoolXAI in a virtual environment.</p>
+<p>It can be installed from PyPI using:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">boolxai</span></code></p>
+<p>Alternatively, clone this repo and use:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code></p>
+<p>In order to plot the best rule and get its networkx graph, additional dependencies are required, which can be installed using:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">boolxai[plot]</span></code></p>
+<p>In order to run the <a class="reference external" href="https://github.com/fidelity/boolxai/tree/master/notebooks/">Notebook Usage Examples</a>, additional
+dependencies are required, which can be installed using:</p>
+<p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">notebooks/requirements.txt</span></code></p>
+<p>Note that it’s recommended to create a Jupyter notebook kernel for this repository and
+run the notebooks using it, for example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">-m</span> <span class="pre">ipykernel</span> <span class="pre">install</span> <span class="pre">--user</span> <span class="pre">--name</span> <span class="pre">boolxai</span></code></p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h3>
+<p>This library requires <strong>Python 3.8+</strong>.
+See <a class="reference download internal" download="" href="_downloads/b4ef698db8ca845e5845c4618278f29a/requirements.txt"><span class="xref download myst">requirements.txt</span></a> for dependencies. For plotting, see <a class="reference internal" href="#requirements_plot.txt"><span class="xref myst">requirements_plot.txt</span></a> and <code class="docutils literal notranslate"><span class="pre">graphviz</span></code> must be installed separately (see <a class="reference external" href="https://graphviz.org/download">instructions</a>) - it cannot be installed using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p>
+</section>
+</section>
+<section id="citation">
+<h2>Citation<a class="headerlink" href="#citation" title="Link to this heading"></a></h2>
+<p>If you use BoolXAI in a publication, please cite it as:</p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@Article</span><span class="p">{</span><span class="nl">boolxai2023</span><span class="p">,</span>
+<span class="na">AUTHOR</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Rosenberg, Gili and Brubaker, John Kyle and Schuetz, Martin J. A. and Salton, Grant and Zhu, Zhihuai and Zhu, Elton Yechao and Kadıoğlu, Serdar and Borujeni, Sima E. and Katzgraber, Helmut G.}</span><span class="p">,</span>
+<span class="na">TITLE</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Explainable Artificial Intelligence Using Expressive Boolean Formulas}</span><span class="p">,</span>
+<span class="na">JOURNAL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Machine Learning and Knowledge Extraction}</span><span class="p">,</span>
+<span class="na">VOLUME</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{5}</span><span class="p">,</span>
+<span class="na">YEAR</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2023}</span><span class="p">,</span>
+<span class="na">NUMBER</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{4}</span><span class="p">,</span>
+<span class="na">PAGES</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{1760--1795}</span><span class="p">,</span>
+<span class="na">URL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{https://www.mdpi.com/2504-4990/5/4/86}</span><span class="p">,</span>
+<span class="na">ISSN</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2504-4990}</span><span class="p">,</span>
+<span class="na">DOI</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{10.3390/make5040086}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="support">
+<h2>Support<a class="headerlink" href="#support" title="Link to this heading"></a></h2>
+<p>Please submit bug reports, questions, and feature requests as
+<a class="reference external" href="https://github.com/fidelity/boolxai/issues">GitHub Issues</a>.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>BoolXAI is licensed under the <a class="reference internal" href="license.html#license"><span class="std std-ref">Apache License 2.0</span></a>.</p>
+<br></section>
+</section>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#usage-examples">Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#citation">Citation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#support">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="readme.html#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_examples/basic_usage.html">Basic Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_examples/advanced_usage.html">Advanced Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="_examples/upstream_usage.html">Upstream Usage Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">BoolXAI Public API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-boolxai.boolxai">boolxai</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-boolxai.util">util</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#rules">rules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">This repo is archived</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html#making-your-own-changes-to-boolxai">Making your own changes to BoolXAI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">BoolXAI CHANGELOG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#june-3-2024-1-0-0">June, 3, 2024 1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#september-15-2023-0-1-0">September 15, 2023 0.1.0</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">Apache License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notices.html">Notices</a></li>
+</ul>
+</div>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="readme.html" class="btn btn-neutral float-right" title="BoolXAI: Explainable AI using expressive Boolean formulas" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Portions copyright 2023 FMR LLC, portions copyright 2023 Amazon Web Services, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '00 12 * * 1' # Runs every Monday at 8:00 AM EST
+
+jobs:
+  Test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up graphviz on Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run:
+          sudo apt install graphviz graphviz-dev
+
+      - name: Run unit-tests
+        shell: bash
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -e .
+          pip install -r requirements_dev.txt
+          pytest .
+
+      - name: Run notebooks
+        shell: bash
+        run: |
+          pip install -r notebooks/requirements.txt
+          python3 -m ipykernel install --user --name boolxai_test
+          pytest --nbmake --nbmake-timeout=3600 --overwrite notebooks/*.ipynb

@@ -1,0 +1,7 @@
+chardet==5.1.0
+ipython==8.12.2
+jupyter>=1.0.0
+jupyter-server>=2.11.2
+matplotlib==3.7.1
+pandas==2.0.2
+tornado>=6.3.3
